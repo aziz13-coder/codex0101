@@ -1,0 +1,44 @@
+[
+  {
+    "planet": "mercury",
+    "aspect": "sextile",
+    "separation": 58.791970493265694,
+    "orb": 1.2080295067343059,
+    "relative_speed": 10.549927507526466,
+    "simple_method": true,
+    "derivative_method": true,
+    "current_system": true,
+    "moon_longitude": 299.5955885623632,
+    "planet_longitude": 240.80361806909752,
+    "moon_speed": 11.93264201061046,
+    "planet_speed": 1.3827145030839942
+  },
+  {
+    "planet": "venus",
+    "aspect": "square",
+    "separation": 82.89585198126278,
+    "orb": 7.10414801873722,
+    "relative_speed": 10.756731828684018,
+    "simple_method": true,
+    "derivative_method": true,
+    "current_system": true,
+    "moon_longitude": 299.5955885623632,
+    "planet_longitude": 216.69973658110044,
+    "moon_speed": 11.93264201061046,
+    "planet_speed": 1.1759101819264413
+  },
+  {
+    "planet": "jupiter",
+    "aspect": "square",
+    "separation": 85.55386210798997,
+    "orb": 4.446137892010029,
+    "relative_speed": 11.963832959154344,
+    "simple_method": false,
+    "derivative_method": false,
+    "current_system": false,
+    "moon_longitude": 299.5955885623632,
+    "planet_longitude": 25.14945067035318,
+    "moon_speed": 11.93264201061046,
+    "planet_speed": -0.031190948543883813
+  }
+]
