@@ -1279,17 +1279,21 @@ const EnhancedChartCasting = ({ setCurrentChart, setCurrentView, darkMode, apiSt
 
   // Auto-update timezone when location changes (only if not using manual timezone)
   useEffect(() => {
+    let timeoutId;
     if (location.trim() && !useManualTimezone) {
-      getTimezoneFromLocation(location).then(detectedTimezone => {
-        if (detectedTimezone !== timezone) {
-          setTimezone(detectedTimezone);
-        }
-      }).catch(error => {
-        console.warn('Timezone detection failed:', error);
-        // Keep current timezone on error
-      });
+      timeoutId = setTimeout(() => {
+        getTimezoneFromLocation(location).then(detectedTimezone => {
+          if (detectedTimezone !== timezone) {
+            setTimezone(detectedTimezone);
+          }
+        }).catch(error => {
+          console.warn('Timezone detection failed:', error);
+          // Keep current timezone on error
+        });
+      }, 300);
     }
-  }, [location, useManualTimezone, timezone]);
+    return () => clearTimeout(timeoutId);
+  }, [location, useManualTimezone]);
 
   const handleLocationChange = (value) => {
     setLocation(value);

@@ -38,7 +38,7 @@ import os
 
 from datetime import datetime, timezone
 
-from functools import wraps
+from functools import wraps, lru_cache
 
 from collections import defaultdict
 
@@ -398,6 +398,17 @@ def health_check():
     return jsonify(health_status), 200
 
 
+@lru_cache(maxsize=128)
+def cached_safe_geocode(location):
+    from horary_engine.services.geolocation import safe_geocode
+    return safe_geocode(location)
+
+
+@lru_cache(maxsize=128)
+def cached_timezone_for_location(lat, lon):
+    from horary_engine.services.geolocation import TimezoneManager
+    return TimezoneManager().get_timezone_for_location(lat, lon)
+
 
 @app.route('/api/get-timezone', methods=['POST'])
 
@@ -437,19 +448,13 @@ def get_timezone():
 
         try:
 
-            from horary_engine.services.geolocation import safe_geocode
+            lat, lon, full_location = cached_safe_geocode(location)
 
-            lat, lon, full_location = safe_geocode(location)
 
-            
 
             # Get timezone using enhanced timezone manager
 
-            from horary_engine.services.geolocation import TimezoneManager
-
-            timezone_manager = TimezoneManager()
-
-            timezone_str = timezone_manager.get_timezone_for_location(lat, lon)
+            timezone_str = cached_timezone_for_location(lat, lon)
 
             
 
