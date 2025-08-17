@@ -7,7 +7,7 @@ const cleanMoonText = (text) => {
   
   return text
     // Remove duplicate "Moon" references
-    .replace(/Void ☽ Moon: ☽ Moon/g, 'Void Moon:')
+    .replace(/Void(?: ☽)? Moon:\s*(?:☽\s*)?Moon/gi, 'Void Moon:')
     .replace(/☽ Moon/g, 'Moon')
     .replace(/Moon Moon/g, 'Moon')
     // Remove trailing parentheticals like "(moon)"

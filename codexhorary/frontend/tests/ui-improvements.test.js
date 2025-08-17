@@ -71,7 +71,7 @@ export const testTextCleanup = () => {
     if (!text || typeof text !== 'string') return text;
     
     return text
-      .replace(/Void ☽ Moon: ☽ Moon/g, 'Void Moon:')
+      .replace(/Void(?: ☽)? Moon:\s*(?:☽\s*)?Moon/gi, 'Void Moon:')
       .replace(/☽ Moon/g, 'Moon')
       .replace(/Moon Moon/g, 'Moon')
       .replace(/\s*\([^)]*moon[^)]*\)\s*$/gi, '')
@@ -83,6 +83,10 @@ export const testTextCleanup = () => {
   const tests = [
     {
       input: 'Void ☽ Moon: ☽ Moon makes no more aspects before leaving Capricorn (moon)',
+      expected: 'Void Moon: makes no more aspects before leaving Capricorn'
+    },
+    {
+      input: 'Void Moon: Moon makes no more aspects before leaving Capricorn',
       expected: 'Void Moon: makes no more aspects before leaving Capricorn'
     },
     {
