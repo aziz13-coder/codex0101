@@ -359,6 +359,9 @@ const JudgmentBreakdown = ({ reasoning, darkMode }) => {
       } else if (reason.includes('Perfection found') || reason.includes('perfection found')) {
         stage = 'Reception';
         weight = +1; // Green for positive perfection
+      } else if (reason.includes('Void Moon') || reason.includes('void moon')) {
+        stage = 'Chart Considerations';
+        weight = -1; // Void Moon is a negative consideration
       } else if (reason.includes('aspect') || reason.includes('Aspect') || (reason.includes('perfection') && !reason.includes('Denial')) || reason.includes('Moon-Sun')) {
         stage = 'Aspects';
         weight = reason.includes('applying') || (reason.includes('perfection') && !reason.includes('Denial')) || reason.includes('Moon-Sun') ? +1 : 0;
@@ -392,7 +395,7 @@ const JudgmentBreakdown = ({ reasoning, darkMode }) => {
                  !reason.includes('applying') && !reason.includes('separating')) {
         stage = 'Planetary Motion';
         weight = -1; // Retrograde significators are generally negative (but not retrograde aspects)
-      } else if (reason.includes('Chart validity') || reason.includes('confidence capped') || reason.includes('Void Moon') || reason.includes('void moon') || (reason.includes('🟡') && (reason.includes('warning') || reason.includes('caution')))) {
+      } else if (reason.includes('Chart validity') || reason.includes('confidence capped') || (reason.includes('🟡') && (reason.includes('warning') || reason.includes('caution')))) {
         stage = 'Chart Considerations';
         weight = 0; // Warnings are neutral - cautionary but not denial
       } else if (reason.includes('solar') || reason.includes('cazimi') || reason.includes('combusted') || reason.includes('Combustion') || (reason.includes('🔴') && (reason.includes('solar') || reason.includes('combust')))) {
@@ -462,13 +465,14 @@ const JudgmentBreakdown = ({ reasoning, darkMode }) => {
   const getWeightColor = (weight, rule = '') => {
     if (weight > 0) return 'bg-emerald-500';
     if (weight < 0) return 'bg-red-500';
+    const ruleLower = rule.toLowerCase();
     // Check if this is a warning case that should be yellow instead of gray
-    const isWarning = rule.includes('Saturn in 7th house') || 
-                     rule.includes('Void Moon') || 
-                     rule.includes('early') || 
-                     rule.includes('late') || 
-                     rule.includes('warning') ||
-                     rule.includes('noted but');
+    const isWarning = ruleLower.includes('saturn in 7th house') ||
+                     ruleLower.includes('void moon') ||
+                     ruleLower.includes('early') ||
+                     ruleLower.includes('late') ||
+                     ruleLower.includes('warning') ||
+                     ruleLower.includes('noted but');
     return isWarning ? 'bg-amber-500' : 'bg-gray-400';
   };
 
